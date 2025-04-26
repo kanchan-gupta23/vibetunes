@@ -24,9 +24,9 @@ Cloudinary.config(
         api_secret: process.env.CLOUD_SECRET_KEY,
     }
 )
-
+const port = process.env.PORT || 2000 
 connection().then(()=>{
-    app.listen(process.env.PORT,()=>{
+    app.listen(port,()=>{
         console.log('serevr is running on port 2000');
         
     })
