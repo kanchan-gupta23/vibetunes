@@ -10,7 +10,6 @@ function IdSongs() {
     <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-[100%] gap-8 ">
       {idmusic.map((song, index) => (
         <Box
-          ref={audioref}
           key={index}
           _id={song._id}
           index={index}
