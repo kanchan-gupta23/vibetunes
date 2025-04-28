@@ -16,7 +16,7 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use("/user",router)
 app.use("/admin",adminRouter)
-
+app.use("/music",musicRouter)
 Cloudinary.config(
     {
         cloud_name: process.env.CLOUD_NAME,
