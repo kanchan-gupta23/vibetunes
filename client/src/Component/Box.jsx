@@ -81,7 +81,7 @@ const Box = ({
         </p>
 
         <div className="mt-4">
-          <audio controls className="w-full rounded-md shadow-sm">
+          <audio key={url} controls className="w-full rounded-md shadow-sm">
             <source src={url} type="audio/mpeg" />
           </audio>
         </div>

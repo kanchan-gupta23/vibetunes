@@ -93,13 +93,22 @@ function Songs() {
   const handleMoodClick = (mood) => {
     setSelectedMood(mood);
   };
+  // 1. Fetch fresh songs when mood changes
   useEffect(() => {
-    Music(selectedMood);
-    const filteredSongs = songs.filter((song) =>
-      song.genre.toLowerCase().includes(selectedMood.toLowerCase())
-    );
-    setFiltered(filteredSongs);
-  }, [selectedMood, songs]);
+    if (selectedMood) {
+      Music(selectedMood); // just fetch
+    }
+  }, [selectedMood]);
+
+  // 2. When songs are updated, filter based on mood
+  useEffect(() => {
+    if (selectedMood && songs.length > 0) {
+      const filteredSongs = songs.filter((song) =>
+        song.genre.toLowerCase().includes(selectedMood.toLowerCase())
+      );
+      setFiltered(filteredSongs);
+    }
+  }, [songs, selectedMood]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-gradient-to-tr from-[#1e003b] via-[#2d006e] to-[#000000] py-10 px-5 text-white">

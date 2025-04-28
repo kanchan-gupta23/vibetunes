@@ -83,6 +83,7 @@ const ContextProvider = ({ children }) => {
       );
       console.log(response.data);
       toast.success(`your ${genre} songs are here`);
+      setSongs(response.data);
       SetIdMusic(response.data);
     } catch (error) {
       console.log("Error fetching music:", error);
