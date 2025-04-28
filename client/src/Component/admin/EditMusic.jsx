@@ -1,8 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import { useParams } from "react-router-dom";
 
-function Admin() {
+function EditMusic() {
+  const params = useParams();
+
   const { setSongs, AdminAuthentication } = useContext(Context);
   const [value, setValue] = useState({
     name: "",
@@ -19,18 +22,21 @@ function Admin() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", value.name);
-    formData.append("genre", value.genre);
-    formData.append("artistName", value.artistName);
-    formData.append("artistBio", value.artistBio);
-    formData.append("audio", value.audio);
-
     try {
-      const response = await axios.post(
-        `http://localhost:2000/music/createMusic`,
+      const formData = new FormData();
+      formData.append("name", value.name);
+      formData.append("genre", value.genre);
+      formData.append("artistName", value.artistName);
+      formData.append("artistBio", value.artistBio);
+
+      if (value.audio) {
+        formData.append("audio", value.audio); // Only if new audio uploaded
+      }
+
+      const response = await axios.put(
+        `http://localhost:2000/music/updateSongById/${params._id}`,
         formData,
         {
           headers: {
@@ -39,9 +45,7 @@ function Admin() {
           },
         }
       );
-      console.log(response.data);
 
-      setSongs(response.data.attachments.url);
       setValue({
         name: "",
         genre: "",
@@ -49,11 +53,36 @@ function Admin() {
         artistBio: "",
         audio: null,
       });
+
+      console.log(response.data);
     } catch (error) {
-      console.error("Error submitting the form:", error);
+      console.log(error);
     }
   };
 
+  const getMusicById = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:2000/music/getSongById/${params._id}`,
+        {
+          headers: {
+            Authorization: AdminAuthentication,
+          },
+        }
+      );
+      setValue({
+        name: response.data.name || "",
+        genre: response.data.genre || "",
+        artistName: response.data.artist?.name || "",
+        artistBio: response.data.artist?.bio || "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getMusicById();
+  }, []);
   return (
     <div
       className="flex justify-center items-center min-h-screen bg-cover bg-center px-4"
@@ -63,12 +92,12 @@ function Admin() {
       }}
     >
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleUpdate}
         className="backdrop-blur-md bg-white/30 text-white w-full max-w-lg p-8 rounded-2xl shadow-xl space-y-6 border border-white/40"
       >
         <div className="text-center">
-          <h1 className="text-3xl font-bold">Add New Music</h1>
-          <p className="text-sm text-white/70">Upload your new track</p>
+          <h1 className="text-3xl font-bold">Update Music</h1>
+          <p className="text-sm text-white/70">Update your track</p>
         </div>
 
         <div className="space-y-4">
@@ -120,7 +149,6 @@ function Admin() {
               name="audio"
               accept="audio/*"
               onChange={handleChange}
-              required
               className="w-full text-white bg-white/20 placeholder-white/60 border border-white/30 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-white cursor-pointer"
             />
           </div>
@@ -172,4 +200,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default EditMusic;

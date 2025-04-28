@@ -12,5 +12,7 @@ router.route("/getMusicQuery").get(usermiddleware,controller.getMusicQuery)
 router.route("/getMusicPrams/:genre").get(usermiddleware,controller.getMusicParams)
 router.route("/actions").put(usermiddleware,controller.getAction )
 router.route("/delete/:id").delete(adminmiddleware,controller.deleteSong )
+router.route("/getSongById/:id").get(adminmiddleware,controller.getSongById )
+router.route("/updateSongById/:id").put(adminmiddleware,multer.single("audio"),controller.updateSongById  )
 
 module.exports = router

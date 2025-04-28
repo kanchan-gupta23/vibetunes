@@ -7,6 +7,7 @@ import Home from "./Component/Home";
 import UserLogin from "./Component/User/UserLogin";
 import UserRegistration from "./Component/User/UserRegistration";
 import Songs from "./Component/Songs";
+import EditMusic from "./Component/admin/EditMusic";
 // import IdSongs from "./Component/IdSongs";
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/userLogin" element={<UserLogin />} />
           <Route path="/songs" element={<Songs />} />
-          <Route path="/songs/:genre" element={<Songs />} />
+
+          <Route path="/editmusic/:_id" element={<EditMusic />} />
 
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/userRegistration" element={<UserRegistration />} />

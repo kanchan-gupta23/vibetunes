@@ -6,6 +6,8 @@ import { Context } from "../context/Context";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Box = ({
   artistName,
@@ -54,6 +56,13 @@ const Box = ({
         className="bg-white w-[100%] bg-opacity-10 rounded-2xl shadow-lg p-6 backdrop-blur-lg hover:scale-105 transition-transform duration-300 border border-white border-opacity-10"
       >
         {admin.email ? (
+          <Link to={`/editmusic/${_id}`}>
+            <FaEdit className="text-black absolute right-[3vw] text-2xl" />
+          </Link>
+        ) : (
+          <></>
+        )}
+        {admin.email ? (
           <MdOutlineDeleteOutline
             onClick={() => {
               deleteSong(_id);
@@ -63,6 +72,7 @@ const Box = ({
         ) : (
           <></>
         )}
+
         <h2 className="text-2xl font-bold text-purple-500 truncate">
           {songName}
         </h2>

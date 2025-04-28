@@ -126,7 +126,90 @@ const deleteSong = async (req, res) => {
   }
 };
 
+const getSongById = async (req,res) => {
+  try {
+    const {id} = req.params
+  const music = await Music.findById(id)
+  if(music){
+    return res.status(200).json(music)   
+  }
+  return res.status(400).json({msg:"invalid muisc id"})
+}
+   catch (error) {
+    console.log(error);
+    
+  }
+
+}
+// const updateSongById = async (req,res) => {
+//   try {
+//     const {id} = req.params
+//     const { name, genre, artistName , artistBio }= req.body
+//     console.log(req.body);
+    
+//     const audio = req.file
+//     const results = await uploadAudios([audio])
+//     let attachments = null
+//    if(results.length>0){
+//  attachments={
+//   public_id:results[0].public_id,
+//   url:results[0].url
+
+
+// }
+//    }
+//   const music = await Music.findByIdAndUpdate(id,{name, genre, artist:{name:artistName,bio:artistBio },  },{ new: true })
+  
+//   if(music){
+//     return res.status(200).json(music)   
+//   }
+//   return res.status(400).json({msg:"invalid muisc id"})
+// }
+//    catch (error) {
+//     console.log(error);
+    
+//   }
+// }
+const updateSongById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, genre, artistName, artistBio} = req.body|| {};
+    console.log(req.body);
+    
+    const audio = req.file;
+
+    const results = await uploadAudios([audio]);
+
+    let attachments = null;
+    if (results.length > 0) {
+      attachments = {
+        public_id: results[0].public_id,
+        url: results[0].url,
+      };
+    }
+
+    const music = await Music.findByIdAndUpdate(
+      id,
+      {
+        name,
+        genre,
+        artist: { name: artistName, bio: artistBio },
+        attachments,
+      },
+      { new: true }
+    );
+
+    if (music) {
+      return res.status(200).json(music);
+    }
+    return res.status(400).json({ msg: "Invalid music id" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Server Error" });
+  }
+};
+
   
   
 
-module.exports = {createMusic, getMusicQuery, getMusicParams, music,getAction, deleteSong}
+module.exports = {createMusic, getMusicQuery, getMusicParams, music,getAction, deleteSong,getSongById,updateSongById }
