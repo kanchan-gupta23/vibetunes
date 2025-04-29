@@ -25,7 +25,7 @@ function AdminLogin() {
       );
       getAdminToken(response.data.AdminToken);
       console.log("adminToken", response.data.AdminToken);
-      navigate("/admin");
+      navigate("/songs");
     } catch (error) {
       console.error("Login failed:", error);
     }
