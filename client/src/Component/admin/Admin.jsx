@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Context } from "../../context/Context";
 
+import { useNavigate } from "react-router-dom";
+
 function Admin() {
   const { setSongs, AdminAuthentication } = useContext(Context);
   const [value, setValue] = useState({
@@ -11,6 +13,7 @@ function Admin() {
     artistBio: "",
     audio: null,
   });
+  const navigate = useNavigate();
 
   const handleChange = async (e) => {
     const { name, value, files } = e.target;
@@ -41,7 +44,8 @@ function Admin() {
       );
       console.log(response.data);
 
-      setSongs(response.data.attachments.url);
+      setSongs((prev) => [...prev, response.data]);
+
       setValue({
         name: "",
         genre: "",
@@ -49,6 +53,7 @@ function Admin() {
         artistBio: "",
         audio: null,
       });
+      navigate("/songs");
     } catch (error) {
       console.error("Error submitting the form:", error);
     }

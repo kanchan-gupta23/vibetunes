@@ -7,7 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import { MdHeartBroken } from "react-icons/md";
 import Box from "./Box";
 const AllSongs = () => {
-  const { setSongs, songs, authenticationToken } = useContext(Context);
+  const { setSongs, songs, user, authenticationToken } = useContext(Context);
 
   const allMusic = async () => {
     const response = await axios.get("http://localhost:2000/music/allMusic", {
@@ -24,6 +24,7 @@ const AllSongs = () => {
     <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-[100%] gap-8 ">
       {songs.map((song, index) => (
         <Box
+          setSongs={setSongs}
           key={index}
           _id={song._id}
           index={index}

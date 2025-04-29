@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
 import { MdHeartBroken } from "react-icons/md";
@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 const Box = ({
   artistName,
   artistBio,
-
+  setSongs,
   index,
   songName,
   likes,
@@ -25,10 +25,11 @@ const Box = ({
     handleLikesOrDislikes,
     active,
     admin,
-    AdminAuthentication,
-    setSongs,
-  } = useContext(Context);
 
+    AdminAuthentication,
+  } = useContext(Context);
+  const [localLikes, setLocalLikes] = useState(likes);
+  const [localDislikes, setLocalDislikes] = useState(dislikes);
   const deleteSong = async (id) => {
     try {
       const response = await axios.delete(
@@ -40,16 +41,19 @@ const Box = ({
         }
       );
       toast.success(response.data.msg);
-      setSongs((prev) => prev.filter((song) => song._id !== id));
+      setSelectedMood((prevMood) => prevMood);
+      setSongs((prev) => prev.filter((song) => song._id !== _id));
+      console.log(response.data);
     } catch (error) {
-      toast.error(error.response.data.msg);
+      // toast.error(error.response.data.msg);
     }
   };
 
   return (
     <div>
       <motion.div
-        key={index}
+        key={_id}
+        index={index}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.1 }}
@@ -99,23 +103,30 @@ const Box = ({
               className={`text-3xl transition-all duration-300 ${
                 active[_id] ? "text-red-500 scale-110" : "text-black"
               }`}
-              onClick={() =>
-                handleLikesOrDislikes("likes", _id, likes, dislikes)
-              }
+              onClick={() => {
+                setLocalLikes((prev) => prev + 1);
+                handleLikesOrDislikes("likes", _id, localLikes, localDislikes);
+              }}
             />
-            <p className="text-black">{likes}</p>
+            <p className="text-black">{localLikes}</p>
           </div>
 
           <div className="flex items-center gap-2">
             <MdHeartBroken
-              onClick={() =>
-                handleLikesOrDislikes("dislikes", _id, likes, dislikes)
-              }
+              onClick={() => {
+                setLocalDislikes((prev) => prev + 1);
+                handleLikesOrDislikes(
+                  "dislikes",
+                  _id,
+                  localLikes,
+                  localDislikes
+                );
+              }}
               className={`h-[4vh] w-[4vw] text-3xl transition-all duration-300 ${
                 active[_id] ? "text-zinc-600 scale-110" : "text-black"
               }`}
             />
-            <p className="text-black">{dislikes}</p>
+            <p className="text-black">{localDislikes}</p>
           </div>
         </div>
       </motion.div>

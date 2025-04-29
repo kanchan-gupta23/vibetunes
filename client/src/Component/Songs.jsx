@@ -43,8 +43,16 @@ const moodOptions = [
 ];
 
 function Songs() {
-  const { setSongs, songs, Music, user, idmusic, authenticationToken, Logout } =
-    useContext(Context);
+  const {
+    setSongs,
+    songs,
+    setLikes,
+    Music,
+    user,
+    idmusic,
+    authenticationToken,
+    Logout,
+  } = useContext(Context);
   const [filtered, setFiltered] = useState([]);
   const [selectedMood, setSelectedMood] = useState("");
   const [value, setValue] = useState("");
@@ -68,7 +76,22 @@ function Songs() {
     return `Toh Aa Gye Aap, ${user.fullName} 🌟 Chaliye Mood choose kariye`;
   };
 
-  console.log(getMoodMessage());
+  // Add a debounce function to limit the number of API calls
+  const useDebounce = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]);
+
+    return debouncedValue;
+  };
 
   const handleQuery = async () => {
     try {
@@ -83,12 +106,21 @@ function Songs() {
         }
       );
       console.log(response.data);
-      setValue("");
+      console.log("before", value);
       setQuery(response.data);
+
+      console.log("after", value);
     } catch (error) {
       console.error("Error fetching music:", error);
     }
   };
+  const debouncedValue = useDebounce(value, 500);
+
+  useEffect(() => {
+    if (debouncedValue) {
+      handleQuery();
+    }
+  }, [debouncedValue, songs]);
 
   const handleMoodClick = (mood) => {
     setSelectedMood(mood);
@@ -107,6 +139,7 @@ function Songs() {
         song.genre.toLowerCase().includes(selectedMood.toLowerCase())
       );
       setFiltered(filteredSongs);
+      setValue("");
     }
   }, [songs, selectedMood]);
 
@@ -157,7 +190,9 @@ function Songs() {
           <input
             placeholder="Search Your favorite song"
             className="w-[90%] focus:border-none focus:outline-none  "
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleQuery(); // Press Enter to trigger query
             }}
@@ -166,11 +201,17 @@ function Songs() {
       </div>
       {/* Songs Display */}
       <div>
-        {idmusic.length > 0 ? (
+        {/* If the value is empty and there is idmusic, show IdSongs */}
+        {value !== "" && query.length > 0 ? (
+          <QuerySongs query={query} />
+        ) : value === "" && idmusic?.length > 0 ? (
           <IdSongs />
         ) : query.length > 0 ? (
           <QuerySongs query={query} />
+        ) : idmusic?.length > 0 ? (
+          <IdSongs />
         ) : (
+          // Default to AllSongs when no query or idmusic is present
           <AllSongs />
         )}
       </div>

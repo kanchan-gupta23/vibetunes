@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Context } from "../../context/Context";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EditMusic() {
   const params = useParams();
+  const navigate = useNavigate();
 
   const { setSongs, AdminAuthentication } = useContext(Context);
   const [value, setValue] = useState({
@@ -55,6 +56,7 @@ function EditMusic() {
       });
 
       console.log(response.data);
+      navigate("/songs");
     } catch (error) {
       console.log(error);
     }

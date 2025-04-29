@@ -3,10 +3,7 @@ import Box from "./Box";
 
 function QuerySongs({ query }) {
   return (
-    <div
-      ref={audioref}
-      className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-[100%] gap-8 "
-    >
+    <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-[100%] gap-8 ">
       {query.map((song, index) => (
         <Box
           key={index}
