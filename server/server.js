@@ -26,6 +26,9 @@ Cloudinary.config(
 )
 const port = process.env.PORT || 2000 
 connection().then(()=>{
+    app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
     app.listen(port,()=>{
         console.log('serevr is running on port 2000');
         
