@@ -24,14 +24,21 @@ Cloudinary.config(
         api_secret: process.env.CLOUD_SECRET_KEY,
     }
 )
+process.env.CLOUD_NAME
+process.env.CLOUD_API_KEY
+process.env.CLOUD_SECRET_KEY
 // const express = require('express');
 // const app = express();
 
 const PORT = process.env.PORT || 3000; // Use Render's port or fallback locally
 
-app.listen(PORT, () => {
-  console.log(`server is running on port ${PORT}`);
-});
+connection().then(()=>
+    (
+        app.listen(3000,()=>{
+            console.log(`server is running on port ${PORT}`);
+            
+        })
+    ))
 
 
 
