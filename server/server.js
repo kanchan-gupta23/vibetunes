@@ -24,8 +24,8 @@ Cloudinary.config(
         api_secret: process.env.CLOUD_SECRET_KEY,
     }
 )
-const express = require('express');
-const app = express();
+// const express = require('express');
+// const app = express();
 
 const PORT = process.env.PORT || 3000; // Use Render's port or fallback locally
 
