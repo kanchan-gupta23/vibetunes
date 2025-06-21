@@ -34,11 +34,15 @@ const PORT = process.env.PORT || 3000; // Use Render's port or fallback locally
 
 connection().then(()=>
     (
-        app.listen(3000,()=>{
+        app.listen(2000,()=>{
             console.log(`server is running on port ${PORT}`);
             
         })
-    ))
+    )
+).catch((err)=>{
+    console.log("Db connecion fail");
+    
+})
 
 
 
