@@ -8,7 +8,7 @@ const musicRouter = require("./routes/musicRoute")
 const router = require("./routes/userRoute")
 const Cloudinary = require("cloudinary").v2
 const corsOptions ={
-    origin:"http://localhost:5173",
+    origin:"*",
     credentials :true,
     methods:["POST","GET","PATCH","DELETE","PUT"]
 }
