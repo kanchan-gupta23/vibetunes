@@ -97,7 +97,7 @@ function Songs() {
   const handleQuery = async () => {
     try {
       const response = await axios.get(
-        `https://vibetune-cr9l.onrender.com/music/getMusicQuery`,
+        `http://localhost:2000/music/getMusicQuery`,
         {
           headers: { Authorization: authenticationToken },
           params: {

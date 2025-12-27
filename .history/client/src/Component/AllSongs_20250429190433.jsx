@@ -10,12 +10,9 @@ const AllSongs = () => {
   const { setSongs, songs, user, authenticationToken } = useContext(Context);
 
   const allMusic = async () => {
-    const response = await axios.get(
-      "https://vibetune-cr9l.onrender.com/music/allMusic",
-      {
-        headers: { Authorization: authenticationToken },
-      }
-    );
+    const response = await axios.get("http://localhost:2000/music/allMusic", {
+      headers: { Authorization: authenticationToken },
+    });
     console.log(response.data);
     setSongs(response.data);
   };

@@ -23,7 +23,7 @@ function UserRegistration() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://vibetune-cr9l.onrender.com/user/user`,
+        `http://localhost:2000/user/user`,
         value
       );
       console.log(response.data);

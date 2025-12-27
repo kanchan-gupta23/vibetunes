@@ -48,7 +48,7 @@ const ContextProvider = ({ children }) => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get(`https://vibetune-cr9l.onrender.com/user/userData`, {
+      const response = await axios.get(`http://localhost:2000/user/userData`, {
         headers: { Authorization: authenticationToken },
       });
       console.log("userData", response.data);
@@ -61,7 +61,7 @@ const ContextProvider = ({ children }) => {
   const getAdmin = async () => {
     try {
       const response = await axios.get(
-        `https://vibetune-cr9l.onrender.com/admin/adminData`,
+        `http://localhost:2000/admin/adminData`,
         {
           headers: { Authorization: AdminAuthentication },
         }
@@ -76,7 +76,7 @@ const ContextProvider = ({ children }) => {
   const Music = async (genre) => {
     try {
       const response = await axios.get(
-        `https://vibetune-cr9l.onrender.com/music/getMusicPrams/${genre}`,
+        `http://localhost:2000/music/getMusicPrams/${genre}`,
         {
           headers: { Authorization: authenticationToken },
         }
@@ -101,7 +101,7 @@ const ContextProvider = ({ children }) => {
         dislikes: updatedDislikes,
       };
       const response = await axios.put(
-        "https://vibetune-cr9l.onrender.com/music/actions",
+        "http://localhost:2000/music/actions",
         payload,
         {
           headers: { Authorization: authenticationToken },

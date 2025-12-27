@@ -19,7 +19,7 @@ function AdminRegistration() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://vibetune-cr9l.onrender.com/admin/adminRegistration`,
+        `http://localhost:2000/admin/adminRegistration`,
         value
       );
       getAdminToken(response.data.AdminToken);

@@ -33,7 +33,7 @@ const Box = ({
   const deleteSong = async (id) => {
     try {
       const response = await axios.delete(
-        `https://vibetune-cr9l.onrender.com/music/delete/${id}`,
+        `http://localhost:2000/music/delete/${id}`,
         {
           headers: {
             Authorization: AdminAuthentication,

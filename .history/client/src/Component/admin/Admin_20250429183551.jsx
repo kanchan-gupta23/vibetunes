@@ -33,7 +33,7 @@ function Admin() {
 
     try {
       const response = await axios.post(
-        `https://vibetune-cr9l.onrender.com/music/createMusic`,
+        `http://localhost:2000/music/createMusic`,
         formData,
         {
           headers: {
