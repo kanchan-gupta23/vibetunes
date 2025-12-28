@@ -147,18 +147,18 @@ function Songs() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-gradient-to-tr from-[#1e003b] via-[#2d006e] to-[#000000] py-10 px-5 text-white">
       <div className="w-full mb-2.5 flex justify-end gap-[3vw]  ">
-        {/* <button
+        <button
           onClick={Logout}
           className=" bg-red-700 hover:bg-red-800 text-white px-8 py-2 rounded-full font-bold transition-transform duration-300 shadow-2xl hover:scale-105"
         >
           Logout
-        </button> */}
-        {/* <Link
+        </button>
+        <Link
           to="/admin"
           className=" bg-red-700 hover:bg-red-800 text-white px-8 py-2 rounded-full font-bold transition-transform duration-300 shadow-2xl hover:scale-105"
         >
           Add new song
-        </Link> */}
+        </Link>
       </div>
       <motion.h1
         initial={{ opacity: 0, scale: 0.8 }}
